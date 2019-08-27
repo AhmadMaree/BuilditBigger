@@ -34,7 +34,7 @@ public class ApplicationTest extends TestCase {
     @Test
     public void testApp(){
 
-        joker joke = new joker();
+        Joker joke = new Joker();
 
         String data = null;
         EndpointsAsyncTask coolecter = new EndpointsAsyncTask();
