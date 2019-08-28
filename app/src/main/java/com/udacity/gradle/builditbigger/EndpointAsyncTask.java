@@ -17,6 +17,12 @@ import java.io.IOException;
 public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
+    public AsyncResponse delegate;
+
+    public EndpointAsyncTask(AsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
     @Override
     protected String doInBackground(Pair<Context, String>... pairs) {
 
@@ -36,6 +42,7 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
 
 
                 context=pairs[0].first;
+                String name = pairs[0].second;
 
         try {
             return myApiService.getDataJoke().execute().getData();
@@ -48,8 +55,12 @@ public class EndpointAsyncTask extends AsyncTask<Pair<Context, String>, Void, St
 
     @Override
     protected void onPostExecute(String s) {
-        Intent intent=new Intent(context, JokeActivity.class);
-        intent.putExtra(JokeActivity.JOKE_KEY,s);
-        context.startActivity(intent);
+        if(s!=null) {
+            delegate.processFinish(s);
+        }
+    }
+    public interface AsyncResponse {
+        void processFinish(String output);
     }
 }
+

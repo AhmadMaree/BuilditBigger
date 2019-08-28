@@ -1,19 +1,21 @@
-package AndroidTest;
+package com.example.builditbigger;
 
 import android.content.Context;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.util.Pair;
 
-import com.example.joclib.joker;
-import com.udacity.gradle.builditbigger.EndpointsAsyncTask;
+import androidx.multidex.MultiDex;
+
+import com.example.javajoker.Joker;
+
+import com.udacity.gradle.builditbigger.EndpointAsyncTask;
 
 import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static android.support.test.InstrumentationRegistry.getTargetContext;
+import static androidx.test.InstrumentationRegistry.getTargetContext;
 
 public class ApplicationTest extends TestCase {
 
@@ -37,7 +39,12 @@ public class ApplicationTest extends TestCase {
         Joker joke = new Joker();
 
         String data = null;
-        EndpointsAsyncTask coolecter = new EndpointsAsyncTask();
+        EndpointAsyncTask coolecter = new EndpointAsyncTask(new EndpointAsyncTask.AsyncResponse() {
+            @Override
+            public void processFinish(String output) {
+
+            }
+        });
 
         coolecter.execute(new Pair<Context, String>(context , "second"));
         try {

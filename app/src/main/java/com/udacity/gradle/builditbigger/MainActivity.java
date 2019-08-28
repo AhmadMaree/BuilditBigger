@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +12,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.javajoker.Joker;
+import com.example.jokefactory.JokeActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EndpointAsyncTask.AsyncResponse {
+
+    private static final String JOKE_INTENT_EXTRA_CONSTANT = "joke";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
-        new EndpointAsyncTask().execute(new Pair<Context, String>(this , "second"));
+        new EndpointAsyncTask(this).execute(new Pair<Context, String>(this , "second"));
     }
 
 
+    @Override
+    public void processFinish(String output) {
+        Intent intent = new Intent(MainActivity.this, JokeActivity.class);
+        intent.putExtra(JOKE_INTENT_EXTRA_CONSTANT, output);
+        startActivity(intent);
+    }
 }
