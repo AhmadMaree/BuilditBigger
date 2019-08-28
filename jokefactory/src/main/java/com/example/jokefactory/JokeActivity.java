@@ -25,7 +25,7 @@ public class JokeActivity extends AppCompatActivity {
         if (JokeResult != null) {
             joke.setText(JokeResult);
         } else {
-            joke.setText("Dig deeped, we gotta find the joke!!!");
+            joke.setText(R.string.DigDeep);
         }
 
 
